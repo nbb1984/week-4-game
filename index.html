@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	
+	
+	<!-- Bootstrap File -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>;
+
+ <body>
+  <div class="container">
+  	<div class = "row">
+  		<div class = "col-md-7"></div>
+  		<div class = "col-md-5">
+  			<h1 class = "star-wars">Star Wars RPG</h1>
+  		</div> 
+  	</div>
+  	<div class = "row">
+      <div class = "col-md-6">
+        <div class = "row">
+          <div class = "character-starting-position">
+      			<div class = "character obi-wan-kenobi" value ="obi-wan">
+              <p class = "char">Obi Wan Kenobi</p>
+              <img class="obi-wan-k" src="https://s-media-cache-ak0.pinimg.com/736x/d9/12/8b/d9128b90fbee4a3d51926bb0e0b2f56f.jpg" alt="obi wan kenobi" width="90" height="90">
+      				
+              <p class = "health-points owk">120</p>
+           
+            </div>
+      			<div class = "character luke-skywalker" value ="luke">
+              <p class = "char">Luke Skywalker</p>
+              <img src = "https://s-media-cache-ak0.pinimg.com/736x/2f/b7/dc/2fb7dc3e5cb7b12b454aa1bfdf45573f.jpg" alt="Luke Skywalker" width="90" height="90" alt="" class="img luke-s">
+      				
+              <p class = "health-points ls">100</p>
+      			</div>
+      			<div class = "character darth-sidious" value="darth-sid">
+              <p class = "char">Darth Sidious</p>
+              <img class="irc_mi" src="https://pbs.twimg.com/profile_images/813910346721325056/p6_8mbJd_400x400.jpg" alt="Image result for darth sidious" width="90" height="90">
+      				
+              <p class = "health-points ds">150</p>
+      			</div>
+          
+          
+    			   <div class = "character darth-maul" value="darth-m">
+             <p class = "char">Darth Maul</p>
+             <img class="irc_mi" src="https://s-media-cache-ak0.pinimg.com/736x/a9/7e/d8/a97ed8f2ee3060fbe7881b309bf4cc7e.jpg" alt="darth maul" width="90" height="90">
+    				    
+                <p class = "health-points dm">180</p>
+    			   </div>
+          </div>
+        </div>
+      
+        <div class = "row">
+          <div class = "col-md-12">
+            <div class = "row">
+              <p class = "extra padding">Your Character</p> 
+              <div class ="move-enemies-here"></div>
+            </div>
+          </div>
+        </div>
+      	<div class = "row">
+      		<div class = "col-md-5">
+            <div class = "row">
+      			<p>Enemies to Attack</p> 
+            </div>
+      		</div>
+        </div>
+        <div class ="row">
+          	<div class = "col-md-4">
+              <div class = "row">
+          			   <p id = "fight-section">Fight Section</p>
+              </div>
+              <div class = "row">
+                  <button id="button-attack" class="btn btn-primary attack" value="attack">
+                    <h3>Attack</h3>
+                  </button>
+              </div>
+              <div class = "row">
+                  <button id="button-restart" class="btn btn-danger restart">
+                  <h3>Restart</h3>
+                  </button>
+              </div>
+            </div>
+            <div class = "col-md-8">
+                <div class = "defender">
+                   <p class = "defender-text">Defender</p>
+                   <div class = "move-defender-here"></div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class = "col-md-6">
+        <div class = "row">
+          <img src = "assets/images/x-wing.png" alt = "x-wing" style = "position:absolute;">
+        </div>
+        <div class = "row">
+            <div class = "message-section"><p>Ready to Play?</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--player clicks on the fighter's picture and becomes that fighter for the rest of the game.  
+  //move bad guys to the other side of the screen.
+  //player clicks on an enemy's picture to chose that enemy as an opponent.  
+  //enemy gets moved to a defender area.
+  //player can only now press the attack button. 
+  //when the player clicks the attack button, it damages the defender.  
+  //the defender will instantly counterattack.  When that happens, the player will lose health points.  
+  //the player will keep hitting the attack button
+  //when defender's score is down to zero, remove the defender from the defender area.  player character now choses a new opponent.  Player loses the game if their hp's go to zero and they haven't defeated all the enemies. -->  
+
+
+
+<script type="text/javascript"> 
+
+$(document).ready(function () {
+  
+  	var healthPoints = 0;
+    var attackPower = 0;
+    var counterAttackPower = 0;
+    var opponentHealthPoints = 0;
+    var yourName;
+    var opponentName;
+    var opponentsRemaining = 3;
+
+    //var onFirstNumber = "";
+    //var isOperatorChosen = false;
+    //var isCalculated = false;
+
+//when clicked, the character moves to the "defender" area.
+//is there a way to move to a specific region as opposed to moving a prescibed distance? 
+
+
+
+
+
+function clearGame() {
+        healthPoints = 0;
+        attackPower = 0;
+        counterAttackPower = 0;
+        opponentHealthPoints = 0;
+        yourName = "";
+        opponentName = "";
+        opponentsRemaining = 3;
+        
+        $(".character-starting-position" ).append($(".obi-wan-kenobi"));
+        $(".character-starting-position" ).append($(".luke-skywalker"));
+        $(".character-starting-position" ).append($(".darth-sidious"));
+        $(".character-starting-position" ).append($(".darth-maul"));
+
+        $(".character").removeClass("opponent");
+        $(".character").removeClass("defeated-opponent");
+        $(".dm").html("180");
+        $(".ls").html("100");
+        $(".owk").html("120");
+        $(".ds").html("150");
+
+        $(".extra").addClass("padding");
+        
+        $(".message-section").html(" ");
+                  return;
+
+      }
+
+
+  $(".restart").on("click", function(event) {
+        clearGame();
+        console.log(attackPower);
+    });
+    
+  $(".character").on("click", function() {
+
+//we remove the padding from the "enemies available" section to make room for the opponents 
+      $(".extra").removeClass("padding");
+
+      if (opponentsRemaining === 1) {
+          $(".extra").addClass("padding");
+      }
+      
+
+ //we set the variable opponentName to the value of the thing we just clicked. 
+      if ($(this).hasClass("opponent")) {
+         opponentName = $(this).attr('value');
+         console.log(opponentName);
+//we add class 'player' in order to distinguish the current opponent from the other opponents. 
+        console.log($(this));
+//we move the current opponent to the 'defender' space.  
+         $( ".move-defender-here" ).append( $(this) )
+//if statements to determine which opponent we chose.  Then we add healthPoints accordingly. 
+      if (opponentName === "obi-wan") {
+          opponentHealthPoints += 120;
+      }
+
+      if (opponentName === "luke") {
+          opponentHealthPoints += 100;
+      }
+
+      if (opponentName === "darth-sid") {
+          opponentHealthPoints += 150;
+      }
+      if (opponentName === "darth-m") {
+          opponentHealthPoints += 180;
+      }
+    }
+    else {
+		      yourName = $(this).attr('value');
+		      console.log(yourName);
+
+        if (yourName === "obi-wan") {
+
+          healthPoints += 120;
+          $(".luke-skywalker").addClass("opponent");
+          $(".darth-sidious").addClass("opponent");
+          $(".darth-maul").addClass("opponent");
+          $( ".move-enemies-here" ).append( $( ".opponent" ) );
+        }
+
+        if (yourName === "luke") {
+          healthPoints += 100;
+    		  $(".obi-wan-kenobi").addClass("opponent");
+          $(".darth-sidious").addClass("opponent")
+          $(".darth-maul").addClass("opponent");
+          $( ".move-enemies-here" ).append( $( ".opponent" ) );
+        }
+
+        if (yourName === "darth-m") {
+          healthPoints += 180;
+          $(".obi-wan-kenobi").addClass("opponent");
+          $(".darth-sidious").addClass("opponent")
+          $(".luke-skywalker").addClass("opponent");
+          $( ".move-enemies-here" ).append( $( ".opponent" ) );
+        }
+
+        if (yourName === "darth-sid") {
+          healthPoints += 150;
+          $(".obi-wan-kenobi").addClass("opponent");
+          $(".luke-skywalker").addClass("opponent")
+          $(".darth-maul").addClass("opponent");
+          $( ".move-enemies-here" ).append( $( ".opponent" ) );
+        }
+
+      
+        
+  
+      }
+    
+  });
+		
+
+    //$(".star-wars").remove({top: "+=200px" }, "normal");
+    //console.log("was clicked");
+//the attack button must now be activated.  We give this class name .attack. We add an on-click listener to the .attack element.   
+			
+// Get the browser to recognize which character you are using $(this). 
+			
+	
+  
+  
+		$(".attack").on("click", function(event) {
+          
+   				if (healthPoints < 1) {
+              var loseMessage = "<p>Sorry! Try Again!</p>";
+              $(".message-section").html(loseMessage);
+                  return;
+          }
+
+          if (opponentHealthPoints < 1) {
+            if (opponentsRemaining === 0) {
+              var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+              $(".message-section").html(winMessage);
+              $(".extra").addClass("padding");
+              return;
+            } else {
+              return;
+            }
+          }
+        
+          if (yourName === "obi-wan"){
+      					if  (opponentName === "luke") {
+      				
+      							healthPoints -= 5;
+                    attackPower += 8;
+        						opponentHealthPoints -= attackPower;
+                    $(".owk").html(healthPoints);
+                    $(".ls").html(opponentHealthPoints);
+        						if (opponentHealthPoints < 1) {
+                        $(".luke-skywalker").addClass("defeated-opponent");
+                        opponentsRemaining --;
+                        console.log(opponentsRemaining);
+                        if (opponentsRemaining === 1) {
+                        var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                        $(".message-section").html(victoryMessage);
+                        }
+                    }
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+        						
+      					}	
+      						
+      					if 	(opponentName === "darth-sid") {
+      							
+                    
+
+								    healthPoints -= 20;
+                    attackPower += 8;
+        						opponentHealthPoints -= attackPower;
+                    $(".owk").html(healthPoints);
+                    $(".ds").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-sidious").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                              var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                              $(".message-section").html(victoryMessage);
+                          }
+                    }
+        						if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                     
+                }
+      					if (opponentName === "darth-m") {
+
+                    
+      						
+								    healthPoints -= 25;
+                    attackPower += 8;
+        						opponentHealthPoints -= attackPower;
+                    $(".owk").html(healthPoints);
+                    $(".dm").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-maul").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+        						
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);   
+                       						 			
+      					}
+          } 
+
+          else if (yourName === "luke") {
+      				
+      					if (opponentName === "obi-wan") {
+      				
+								    healthPoints -= 10;
+                    attackPower += 17;
+        						opponentHealthPoints -= attackPower;
+        						      				      							
+      						  console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                    $(".ls").html(healthPoints);
+                    $(".owk").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".obi-wan-kenobi").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                        if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                          
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+      					}	
+                
+                if  (opponentName === "darth-sid") {
+                    
+                    
+
+                    healthPoints -= 20;
+                    attackPower += 17;
+                    opponentHealthPoints -= attackPower;
+                    $(".ls").html(healthPoints);
+                    $(".ds").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-sidious").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                     
+                }
+                
+                if (opponentName === "darth-m") {
+
+                    
+                  
+                    healthPoints -= 25;
+                    attackPower += 17;
+                    opponentHealthPoints -= attackPower;
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                    $(".ls").html(healthPoints);
+                    $(".dm").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-maul").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        } 
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                }
+            }  
+
+            else if  (yourName === "darth-sid") {
+      					
+                if (opponentName === "obi-wan") {
+              
+                    healthPoints -= 10;
+                    attackPower += 6;
+                    opponentHealthPoints -= attackPower;                                  
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                    $(".ds").html(healthPoints);
+                    $(".owk").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".obi-wan-kenobi").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                } 
+                
+                if  (opponentName === "luke") {
+                    
+                    
+
+                    healthPoints -= 5;
+                    attackPower += 6;
+                    opponentHealthPoints -= attackPower;
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                    $(".ds").html(healthPoints);
+                    $(".ls").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".luke-skywalker").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                     
+                }
+                
+                if (opponentName === "darth-m") {
+
+                    
+                  
+                    healthPoints -= 25;
+                    attackPower += 6;
+                    opponentHealthPoints -= attackPower;
+                    
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);   
+                    $(".ds").html(healthPoints);
+                    $(".dm").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-maul").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                }
+      				
+      			}
+
+            else if  (yourName === "darth-m") {
+                
+                if (opponentName === "obi-wan") {
+              
+                    healthPoints -= 10;
+                    attackPower += 5;
+                    opponentHealthPoints -= attackPower;
+                    $(".dm").html(healthPoints);
+                    $(".owk").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".obi-wan-kenobi").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                                                      
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                } 
+                
+                if  (opponentName === "luke") {
+                    
+                    
+
+                    healthPoints -= 5;
+                    attackPower += 5;
+                    opponentHealthPoints -= attackPower;
+                    $(".dm").html(healthPoints);
+                    $(".ls").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".luke-skywalker").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);
+                     
+                }
+                
+                if (opponentName === "darth-sid") {
+
+                    
+                  
+                    healthPoints -= 20;
+                    attackPower += 5;
+                    opponentHealthPoints -= attackPower;
+                    $(".dm").html(healthPoints);
+                    $(".ds").html(opponentHealthPoints);
+                    if (opponentHealthPoints < 1) {
+                        $(".darth-sidious").addClass("defeated-opponent");
+                          opponentsRemaining --;
+                          if (opponentsRemaining === 1) {
+                            var victoryMessage = "<p>Way to go! Only one adversary standing in your way!</p>";
+                        
+
+                            $(".message-section").html(victoryMessage);
+                          }
+                        }
+                    if (opponentsRemaining === 0) {
+                        var winMessage = "<p>You Won! Congratulations! Play Again!</p>";
+                        $(".message-section").html(winMessage);
+                          return;
+                    }
+                    
+                    
+                    console.log(healthPoints);
+                    console.log(opponentHealthPoints);
+                    console.log(attackPower);   
+                                        
+                }
+            }
+
+      });
+     
+  }); 			   			
+//
+	//			if (opponent === "obi-wan-kenobi") {
+     //     			healthPoints -= ;
+    //    			opponentHealthPoints;
+      //  			attackPower -;
+     //   		}
+
+   //    		if (opponent === "luke-skywalker") {
+    //    			healthPoints -= ;
+ //       			opponentHealthPoints;
+  //      			$("#buttons").append(letterBtn);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        		
+
+    //    		if (opponent === "darth-sidious") {
+    //    			healthPoints -= ;
+    //    			opponentHealthPoints;
+    //    			attackPower -=; 
+    //    		}
+    //    		if (opponent === "darth-maul")
+    //    			healthPoints -= ;
+    //    			opponentHealthPoints;
+    //    			attackPower -=; 
+	//	}
+
+  </script>
+</body>
+</head>
+</html>

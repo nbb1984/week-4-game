@@ -1,0 +1,67 @@
+body {
+	background-image: url(../images/lobster-nebula-1920628_960_720.jpg);
+}
+h1 {
+	color:#ffffff;
+}
+.character {
+	display:inline-block;
+	border:1px solid #32CD32;
+	width: 102px;
+	background-color: #ffffff;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin: 5px;
+
+}
+
+.char {
+	font-family:"Times New Roman", Georgia, Serif;
+	color:black;
+	font-size: 12px;
+	text-align: center;
+	background-color: none;
+}
+
+p.health-points {
+	font-size: 12px;
+	color:black;
+	text-align: center;
+	background-color: none;
+	font-family: "Times New Roman", Georgia, Serif;
+}
+
+.defender-text {
+	background-color: white;
+	color:black;
+	width:25%;
+	border-radius: 2px;
+	text-align: center;
+}
+p {
+	color:#ffffff;
+	font-family: Verdana, Georgia, Serif;
+	font-size:18px;
+}
+
+.padding {
+	padding-bottom: 157px;
+}
+
+#button-restart {
+	background-color:#CCCC00;
+	margin-top: 10px;
+}
+
+.opponent {
+	background-color:red;
+}
+
+.defeated-opponent {
+	background-color: yellow;
+}
+
+.message-section {
+	margin-top: 400px;
+	
+}
